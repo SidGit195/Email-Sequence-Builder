@@ -100,3 +100,10 @@ PUT /api/sequences/:id - Update a sequence <br/>
 DELETE /api/sequences/:id - Delete a sequence <br/>
 
 ## Screenshots
+![Screenshot (552)](https://github.com/user-attachments/assets/853ef34e-36c1-4faa-bf50-2f1a2862d574)
+![Image](https://github.com/user-attachments/assets/f04e9454-09ec-47f8-9fbd-78b58d250e23)
+![Screenshot (554)](https://github.com/user-attachments/assets/fa6c1709-5586-4cb0-91a2-0e5ba9881754)
+![Screenshot (555)](https://github.com/user-attachments/assets/1955dc5f-ba60-41c3-866c-9309c8740b84)
+![Screenshot (556)](https://github.com/user-attachments/assets/97f7adac-e815-45a2-8c93-11831c517d44)
+
+
