@@ -1,9 +1,12 @@
 # Email Sequence Builder project:
 
 **Email Sequence Builder:**
-A full-stack web application for creating and managing automated email sequences with a visual flow-based interface.
+A full-stack web application for creating and managing automated email sequences with a visual flow-based interface
 
-**Project Overview:**
+## 🎥 Demo Video
+Click to watch the demonstration video of project: [https://youtu.be/umvuFC0hkxQ](https://youtu.be/umvuFC0hkxQ)
+
+## Project Overview:
 This application allows users to design email automation sequences through an intuitive drag-and-drop interface. Users can create complex email workflows with conditional logic, delays, and different types of nodes, then schedule them for automated execution.
 
 **Features:**
