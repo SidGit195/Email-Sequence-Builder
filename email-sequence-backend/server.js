@@ -14,38 +14,57 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
-// Initialize Agenda (job scheduler)
-const agenda = new Agenda({
-  db: { address: process.env.MONGO_URI, collection: 'jobs' },
-  processEvery: '30 seconds',
-});
+const isServerless = process.env.VERCEL === '1';
 
-// Make agenda available globally
-app.locals.agenda = agenda;
+let agenda;
+if (!isServerless) {
+  agenda = new Agenda({
+    db: { address: process.env.MONGO_URI, collection: 'jobs' },
+    processEvery: '30 seconds',
+  });
 
-// Import email service and define jobs
-const emailService = require('./services/emailService');
-emailService.defineJobs(agenda);
 
-// Start agenda
-(async function() {
-  await agenda.start();
-  console.log('Agenda job scheduler started');
-})();
+  app.locals.agenda = agenda;
+
+
+  const emailService = require('./services/emailService');
+  emailService.defineJobs(agenda);
+
+  // Start agenda
+  (async function() {
+    await agenda.start();
+    console.log('Agenda job scheduler started');
+  })();
+} else {
+  console.log('Running in serverless environment, using mock agenda');
+  app.locals.agenda = {
+    schedule: () => console.log('Agenda scheduling bypassed in serverless environment'),
+    now: () => console.log('Agenda immediate job bypassed in serverless environment')
+  };
+}
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+
+// Configure CORS
+app.use(cors({
+  origin: process.env.FRONTEND_URL || '*',
+  credentials: true
+}));
 
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/sequences', sequenceRoutes);
 
-// Basic route
+
 app.get('/', (req, res) => {
   res.send('Email Sequence API is running');
 });
 
-// Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+if (!isServerless) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+module.exports = app;

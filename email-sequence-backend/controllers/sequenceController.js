@@ -44,8 +44,12 @@ exports.createSequence = async (req, res) => {
 
     const sequence = await newSequence.save();
     
-    // Schedule emails based on the flowchart
-    await scheduleEmailsFromFlow(flowData, req.app.locals.agenda);
+    // Schedule emails based on the flowchart (if not in serverless)
+    if (process.env.VERCEL !== '1') {
+      await scheduleEmailsFromFlow(flowData, req.app.locals.agenda);
+    } else {
+      console.log('Email scheduling bypassed in serverless environment');
+    }
     
     res.status(201).json(sequence);
   } catch (err) {
@@ -76,8 +80,12 @@ exports.updateSequence = async (req, res) => {
 
     await sequence.save();
     
-    // Schedule emails based on the updated flowchart
-    await scheduleEmailsFromFlow(flowData, req.app.locals.agenda);
+    // Schedule emails based on the updated flowchart (if not in serverless)
+    if (process.env.VERCEL !== '1') {
+      await scheduleEmailsFromFlow(flowData, req.app.locals.agenda);
+    } else {
+      console.log('Email scheduling bypassed in serverless environment');
+    }
     
     res.json(sequence);
   } catch (err) {
