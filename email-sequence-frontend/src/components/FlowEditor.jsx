@@ -44,7 +44,7 @@ const FlowEditor = () => {
         try {
           const token = localStorage.getItem("token");
           const res = await axios.get(
-            `http://localhost:5000/api/sequences/${id}`,
+            `${import.meta.env.VITE_API_URL}/api/sequences/${id}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -134,14 +134,14 @@ const FlowEditor = () => {
       if (id) {
         // Update existing sequence
         await axios.put(
-          `http://localhost:5000/api/sequences/${id}`,
+          `${import.meta.env.VITE_API_URL}/api/sequences/${id}`,
           { name, flowData },
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
         // Create new sequence
         await axios.post(
-          "http://localhost:5000/api/sequences",
+          `${import.meta.env.VITE_API_URL}/api/sequences`,
           { name, flowData },
           { headers: { Authorization: `Bearer ${token}` } }
         );

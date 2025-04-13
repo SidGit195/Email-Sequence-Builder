@@ -38,7 +38,7 @@ const DelayNode = ({ data, selected, isConnectable }) => {
           name="delay"
           value={nodeData.delay}
           onChange={handleChange}
-          min="1"
+          min="0"
           className="w-16 p-1 border border-gray-300 rounded text-sm"
         />
         <select
